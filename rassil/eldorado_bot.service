@@ -1,0 +1,27 @@
+[Unit]
+Description=Eldorado Trade Telegram Bot
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=botuser
+WorkingDirectory=/opt/eldorado_bot
+Environment="PATH=/opt/eldorado_bot/venv/bin"
+ExecStart=/opt/eldorado_bot/venv/bin/python /opt/eldorado_bot/main.py
+Restart=always
+RestartSec=10
+
+# Защита и безопасность
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/eldorado_bot
+
+# Логирование
+StandardOutput=append:/var/log/eldorado_bot/bot.log
+StandardError=append:/var/log/eldorado_bot/error.log
+
+[Install]
+WantedBy=multi-user.target
+
